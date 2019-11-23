@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/{name}', function(){
+    return redirect('/');
+})->where('name','[A-Za-z]+');
+
+Route::resource('/', 'SignupController');
+Route::get('/user/all', 'SignupController@get_all_users');
