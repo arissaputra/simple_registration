@@ -1957,6 +1957,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2123,18 +2133,15 @@ __webpack_require__.r(__webpack_exports__);
         var day = this.form.date;
 
         if (day.toString().length == 1) {
-          day = '0' + day;
+          day = "0" + day;
         }
 
-        this.form.birth_date = this.form.year + '-' + this.form.month.number + '-' + day;
+        this.form.birth_date = this.form.year + "-" + this.form.month.number + "-" + day;
       }
 
       axios.post("/", this.form).then(function (response) {
         console.log(response);
         _this.errors = {};
-
-        _this.toggleDisableForm();
-
         _this.isSaved = true;
       })["catch"](function (error) {
         console.log(error.response);
@@ -53611,7 +53618,12 @@ var render = function() {
                         "b-button",
                         {
                           staticClass: "mybg-purple mb-3",
-                          attrs: { block: "", type: "submit", size: "lg" }
+                          attrs: {
+                            disabled: _vm.isDisabled,
+                            block: "",
+                            type: "submit",
+                            size: "lg"
+                          }
                         },
                         [_vm._v("Register")]
                       )

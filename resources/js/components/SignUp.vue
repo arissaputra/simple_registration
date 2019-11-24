@@ -21,7 +21,7 @@
                 required
                 placeholder="First name"
               ></b-form-input>
-			  <code v-if="errors.first_name" class="has-text-danger">{{errors.first_name[0]}}</code>
+              <code v-if="errors.first_name" class="has-text-danger">{{errors.first_name[0]}}</code>
             </b-form-group>
 
             <b-form-group>
@@ -31,24 +31,34 @@
                 required
                 placeholder="Last name"
               ></b-form-input>
-			  <code v-if="errors.last_name" class="has-text-danger">{{errors.last_name[0]}}</code>
+              <code v-if="errors.last_name" class="has-text-danger">{{errors.last_name[0]}}</code>
             </b-form-group>
 
             <b-form-group id="input-group-3" label="Date of Birth" label-for="input-3">
               <b-row>
                 <b-col cols="2">
                   <b-form-select
-				  	:required="isDateRequired"
+                    :required="isDateRequired"
                     :disabled="isDisabled"
                     v-model="form.month"
                     :options="month_options"
                   ></b-form-select>
                 </b-col>
                 <b-col cols="2">
-                  <b-form-select :required="isDateRequired" :disabled="isDisabled" v-model="form.date" :options="date_options"></b-form-select>
+                  <b-form-select
+                    :required="isDateRequired"
+                    :disabled="isDisabled"
+                    v-model="form.date"
+                    :options="date_options"
+                  ></b-form-select>
                 </b-col>
                 <b-col cols="2">
-                  <b-form-select :required="isDateRequired" :disabled="isDisabled" v-model="form.year" :options="year_options"></b-form-select>
+                  <b-form-select
+                    :required="isDateRequired"
+                    :disabled="isDisabled"
+                    v-model="form.year"
+                    :options="year_options"
+                  ></b-form-select>
                 </b-col>
               </b-row>
             </b-form-group>
@@ -72,7 +82,7 @@
               <code v-if="errors.email" class="has-text-danger">{{errors.email[0]}}</code>
             </b-form-group>
 
-            <b-button block type="submit" size="lg" class="mybg-purple mb-3">Register</b-button>
+            <b-button :disabled="isDisabled" block type="submit" size="lg" class="mybg-purple mb-3">Register</b-button>
           </b-form>
           <router-link v-if="isSaved" to="/signin">
             <b-button block size="lg" class="mybg-purple mb-3">Login</b-button>
@@ -89,8 +99,8 @@ export default {
   data() {
     return {
       isDisabled: false,
-	  isSaved: false,
-	  errors: {},
+      isSaved: false,
+      errors: {},
 
       form: {
         first_name: "",
@@ -100,8 +110,8 @@ export default {
         gender: "",
         month: "",
         date: "",
-		year: "",
-		birth_date: null,
+        year: "",
+        birth_date: null
       },
       gender_options: [
         { text: "Male", value: "male" },
@@ -121,17 +131,17 @@ export default {
         { text: "October", value: { number: "10", length: 31 } },
         { text: "November", value: { number: "11", length: 30 } },
         { text: "December", value: { number: "12", length: 31 } }
-      ],
+      ]
     };
   },
   computed: {
     date_options() {
       if (this.form.month != "") {
         let options = [{ text: "Date", value: "" }];
-		let length = this.form.month.length;
-		if (this.form.year != "" && this.form.year % 4 == 0) {
-			length = 29;
-		}
+        let length = this.form.month.length;
+        if (this.form.year != "" && this.form.year % 4 == 0) {
+          length = 29;
+        }
         for (let index = 0; index < length; index++) {
           options.push({
             text: index + 1,
@@ -152,35 +162,37 @@ export default {
         });
       }
       return options;
-	},
-	isDateRequired(){
-		if (this.form.month != "" || this.form.date != "" || this.form.year != "") {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    },
+    isDateRequired() {
+      if (
+        this.form.month != "" ||
+        this.form.date != "" ||
+        this.form.year != ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-	  this.toggleDisableForm();
-	  if (this.isDateRequired) {
-		  let day = this.form.date;
-		  if (day.toString().length == 1) {
-			  day = '0'+day;
-		  }
-		  this.form.birth_date = this.form.year + '-' + this.form.month.number + '-' + day;
-	  }
+      this.toggleDisableForm();
+      if (this.isDateRequired) {
+        let day = this.form.date;
+        if (day.toString().length == 1) {
+          day = "0" + day;
+        }
+        this.form.birth_date =
+          this.form.year + "-" + this.form.month.number + "-" + day;
+      }
       axios
         .post("/", this.form)
         .then(response => {
           console.log(response);
           this.errors = {};
-          this.toggleDisableForm();
           this.isSaved = true;
         })
         .catch(error => {
