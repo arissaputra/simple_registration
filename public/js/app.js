@@ -1995,7 +1995,7 @@ __webpack_require__.r(__webpack_exports__);
         text: "February",
         value: {
           number: "02",
-          length: 29
+          length: 28
         }
       }, {
         text: "March",
@@ -2068,6 +2068,10 @@ __webpack_require__.r(__webpack_exports__);
           value: ""
         }];
         var length = this.form.month.length;
+
+        if (this.form.year != "" && this.form.year % 4 == 0) {
+          length = 29;
+        }
 
         for (var index = 0; index < length; index++) {
           options.push({

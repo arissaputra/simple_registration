@@ -110,7 +110,7 @@ export default {
       month_options: [
         { text: "Month", value: "" },
         { text: "January", value: { number: "01", length: 31 } },
-        { text: "February", value: { number: "02", length: 29 } },
+        { text: "February", value: { number: "02", length: 28 } },
         { text: "March", value: { number: "03", length: 31 } },
         { text: "April", value: { number: "04", length: 30 } },
         { text: "May", value: { number: "05", length: 31 } },
@@ -128,7 +128,10 @@ export default {
     date_options() {
       if (this.form.month != "") {
         let options = [{ text: "Date", value: "" }];
-        let length = this.form.month.length;
+		let length = this.form.month.length;
+		if (this.form.year != "" && this.form.year % 4 == 0) {
+			length = 29;
+		}
         for (let index = 0; index < length; index++) {
           options.push({
             text: index + 1,
