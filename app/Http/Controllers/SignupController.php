@@ -97,8 +97,4 @@ class SignupController extends Controller
     {
         //
     }
-
-    public function get_all_users(){
-        return User::all();
-    }
 }

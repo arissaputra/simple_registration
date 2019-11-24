@@ -20,4 +20,3 @@ Route::get('/{name}', function(){
 })->where('name','[A-Za-z]+');
 
 Route::resource('/', 'SignupController');
-Route::get('/user/all', 'SignupController@get_all_users');
